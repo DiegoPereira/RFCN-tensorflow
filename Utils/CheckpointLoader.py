@@ -14,7 +14,8 @@
 #
 # ==============================================================================
 
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 def getCheckpointVarList(file):
 	reader = tf.contrib.framework.load_checkpoint(file)

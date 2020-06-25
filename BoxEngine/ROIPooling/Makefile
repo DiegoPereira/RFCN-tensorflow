@@ -1,3 +1,4 @@
+$(info Diego1)
 CUDA_HOME?=$(shell dirname `dirname \`which nvcc\``)
 CUDA_INC := ${CUDA_HOME}/include
 NVCC := ${CUDA_HOME}/bin/nvcc
@@ -12,26 +13,30 @@ ifeq (${USE_OLD_EABI}, 1)
 	CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
 endif
 LIB=-L ${CUDA_HOME}/targets/x86_64-linux/lib -L ${CUDA_HOME}/lib64/ -L ${CUDA_HOME}/extras/CUPTI/lib64/ -lcudart ${TF_LDFLAGS}
+$(info Diego2)
 
 all: roi_pooling.so
 
 roi_pooling_grad.o: roi_pooling_grad.cc
 	${CXX} ${CXXFLAGS} -c -o roi_pooling_grad.o roi_pooling_grad.cc ${TF_INCLUDE} -I ${CUDA_INC} -fPIC -O2
 
+$(info Diego3)
 roi_pooling.o: roi_pooling.cc
 	${CXX}  ${CXXFLAGS} -c -o roi_pooling.o roi_pooling.cc ${TF_INCLUDE} -I ${CUDA_INC} -fPIC -O2
 
+$(info Diego4)
 roi_pooling.cu.o: roi_pooling.cu.cc
 	${NVCC} -std=c++11 -c -o roi_pooling.cu.o roi_pooling.cu.cc ${TF_INCLUDE} -I ${CUDA_INC} -D GOOGLE_CUDA=1 -x cu -Xcompiler -fPIC -arch=${ARCH} -use_fast_math
 
+$(info Diego5)
 roi_pooling_grad.cu.o: roi_pooling_grad.cu.cc
 	${NVCC} -std=c++11 -c -o roi_pooling_grad.cu.o roi_pooling_grad.cu.cc ${TF_INCLUDE} -I ${CUDA_INC} -D GOOGLE_CUDA=1 -x cu -Xcompiler -fPIC -arch=${ARCH} -use_fast_math
 
-
+$(info Diego6)
 roi_pooling.so: roi_pooling.o roi_pooling_grad.o roi_pooling.cu.o roi_pooling_grad.cu.o
 	${CXX}  ${CXXFLAGS} -shared -o roi_pooling.so roi_pooling.o roi_pooling_grad.o roi_pooling.cu.o roi_pooling_grad.cu.o ${TF_INCLUDE} -I ${CUDA_INC} -fPIC -O2 ${LIB}
 
-
+$(info Diego7)
 clean:
 	-rm *.so
 	-rm *.o

@@ -15,11 +15,12 @@
 # ==============================================================================
 
 import tensorflow as tf
-import tensorflow.contrib.slim as slim
+#import tensorflow.contrib.slim as slim
+import tf_slim as slim
 import math
 import Utils.RandomSelect
-import BoxEngine.BoxUtils as BoxUtils
-import BoxEngine.Loss as Loss
+from BoxEngine import BoxUtils, Loss
+#import BoxEngine.Loss as Loss
 import Utils.MultiGather as MultiGather
 
 class RPN:

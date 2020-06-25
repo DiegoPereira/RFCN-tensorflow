@@ -15,7 +15,8 @@
 # ==============================================================================
 
 import tensorflow as tf
-import tensorflow.contrib.slim as slim
+#import tensorflow.contrib.slim as slim
+import tf_slim as slim
 from BoxEngine.ROIPooling import positionSensitiveRoiPooling
 import math
 import Utils.RandomSelect

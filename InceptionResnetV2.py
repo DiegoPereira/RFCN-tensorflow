@@ -16,7 +16,9 @@
 # ==============================================================================
 
 import tensorflow as tf
-import tensorflow.contrib.slim as slim
+#import tensorflow.contrib.slim as slim
+import tf_slim as slim
+
 from Utils import CheckpointLoader
 
 class InceptionResnetV2:
@@ -131,7 +133,7 @@ class InceptionResnetV2:
 					trainBatchNormScope.__exit__(None, None, None)
 				weightDecayScope.__exit__(None,None,None)
 
-		with tf.variable_scope(scope, 'InceptionResnetV2', [inputs], reuse=reuse) as scope:
+		with tf.compat.v1.variable_scope(scope, 'InceptionResnetV2', [inputs], reuse=reuse) as scope:
 			with slim.arg_scope([slim.batch_norm], is_training=False):
 				with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d], stride=1, padding='SAME'):
 
@@ -166,7 +168,7 @@ class InceptionResnetV2:
 
 					# 35 x 35 x 320
 					beginBlock('Mixed_5b')
-					with tf.variable_scope('Mixed_5b'):
+					with tf.compat.v1.variable_scope('Mixed_5b'):
 						with tf.variable_scope('Branch_0'):
 							tower_conv = slim.conv2d(net, 96, 1, scope='Conv2d_1x1')
 						with tf.variable_scope('Branch_1'):

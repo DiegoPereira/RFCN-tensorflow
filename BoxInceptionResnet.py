@@ -15,7 +15,8 @@
 # ==============================================================================
 
 import tensorflow as tf
-import tensorflow.contrib.slim as slim
+#import tensorflow.contrib.slim as slim
+import tf_slim as slim
 
 import Utils.RandomSelect
 
@@ -41,11 +42,11 @@ class BoxInceptionResnet(BoxNetwork):
 
 		print("Training network from "+(trainFrom if trainFrom is not None else "end"))
 
-		with tf.variable_scope(name, reuse=reuse) as scope:
+		with tf.compat.v1.variable_scope(name, reuse=reuse) as scope:
 			self.googleNet = InceptionResnetV2("features", inputs, trainFrom=trainFrom, freezeBatchNorm=freezeBatchNorm)
 			self.scope=scope
 		
-			with tf.variable_scope("Box"):
+			with tf.compat.v1.variable_scope("Box"):
 				#Pepeat_1 - last 1/16 layer, Mixed_6a - first 1/16 layer
 				scale_16 = self.googleNet.getOutput("Repeat_1")[:,1:-1,1:-1,:]
 				#scale_16 = self.googleNet.getOutput("Mixed_6a")[:,1:-1,1:-1,:]
