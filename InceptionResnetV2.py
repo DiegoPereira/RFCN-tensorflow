@@ -25,7 +25,7 @@ class InceptionResnetV2:
 	@staticmethod
 	def block35(net, scale=1.0, activation_fn=tf.nn.relu, scope=None, reuse=None):
 		"""Builds the 35x35 resnet block."""
-		with tf.variable_scope(scope, 'Block35', [net], reuse=tf.AUTO_REUSE):
+		with tf.variable_scope(scope, 'Block35', [net], reuse=tf.compat.v1.AUTO_REUSE):
 			with tf.variable_scope('Branch_0'):
 				tower_conv = slim.conv2d(net, 32, 1, scope='Conv2d_1x1')
 			with tf.variable_scope('Branch_1'):
@@ -45,7 +45,7 @@ class InceptionResnetV2:
 	@staticmethod
 	def block17(net, scale=1.0, activation_fn=tf.nn.relu, scope=None, reuse=None):
 		"""Builds the 17x17 resnet block."""
-		with tf.variable_scope(scope, 'Block17', [net], reuse=tf.AUTO_REUSE):
+		with tf.variable_scope(scope, 'Block17', [net], reuse=tf.compat.v1.AUTO_REUSE):
 			with tf.variable_scope('Branch_0'):
 				tower_conv = slim.conv2d(net, 192, 1, scope='Conv2d_1x1')
 			with tf.variable_scope('Branch_1'):
@@ -62,7 +62,7 @@ class InceptionResnetV2:
 	@staticmethod
 	def block8(net, scale=1.0, activation_fn=tf.nn.relu, scope=None, reuse=None):
 		"""Builds the 8x8 resnet block."""
-		with tf.variable_scope(scope, 'Block8', [net], reuse=tf.AUTO_REUSE):
+		with tf.variable_scope(scope, 'Block8', [net], reuse=tf.compat.v1.AUTO_REUSE):
 			with tf.variable_scope('Branch_0'):
 				tower_conv = slim.conv2d(net, 192, 1, scope='Conv2d_1x1')
 			with tf.variable_scope('Branch_1'):
@@ -133,13 +133,13 @@ class InceptionResnetV2:
 					trainBatchNormScope.__exit__(None, None, None)
 				weightDecayScope.__exit__(None,None,None)
 
-		with tf.compat.v1.variable_scope(scope, 'InceptionResnetV2', [inputs], reuse=tf.AUTO_REUSE) as scope:
+		with tf.compat.v1.variable_scope(scope, 'InceptionResnetV2', [inputs], reuse=tf.compat.v1.AUTO_REUSE) as scope:
 			with slim.arg_scope([slim.batch_norm], is_training=False):
 				with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d], stride=1, padding='SAME'):
 
 					# 149 x 149 x 32
-					beginBlock('Conv2d_1a_3x3')
-					net = slim.conv2d(inputs, 32, 3, stride=2, padding='VALID', scope='Conv2d_1a_3x3')
+					beginBlock('Conv2d_1a2_3x3')
+					net = slim.conv2d(inputs, 32, 3, stride=2, padding='VALID', scope='Conv2d_1a2_3x3')
 					endBlock(net)
 					# 147 x 147 x 32
 					beginBlock('Conv2d_2a_3x3')
