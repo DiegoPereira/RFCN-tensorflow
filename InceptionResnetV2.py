@@ -169,16 +169,16 @@ class InceptionResnetV2:
 					# 35 x 35 x 320
 					beginBlock('Mixed_5b')
 					with tf.compat.v1.variable_scope('Mixed_5b'):
-						with tf.variable_scope('Branch_0'):
+						with tf.compat.v1.variable_scope('Branch_0'):
 							tower_conv = slim.conv2d(net, 96, 1, scope='Conv2d_1x1')
-						with tf.variable_scope('Branch_1'):
+						with tf.compat.v1.variable_scope('Branch_1'):
 							tower_conv1_0 = slim.conv2d(net, 48, 1, scope='Conv2d_0a_1x1')
 							tower_conv1_1 = slim.conv2d(tower_conv1_0, 64, 5, scope='Conv2d_0b_5x5')
-						with tf.variable_scope('Branch_2'):
+						with tf.compat.v1.variable_scope('Branch_2'):
 							tower_conv2_0 = slim.conv2d(net, 64, 1, scope='Conv2d_0a_1x1')
 							tower_conv2_1 = slim.conv2d(tower_conv2_0, 96, 3, scope='Conv2d_0b_3x3')
 							tower_conv2_2 = slim.conv2d(tower_conv2_1, 96, 3, scope='Conv2d_0c_3x3')
-						with tf.variable_scope('Branch_3'):
+						with tf.compat.v1.variable_scope('Branch_3'):
 							tower_pool = slim.avg_pool2d(net, 3, stride=1, padding='SAME', scope='AvgPool_0a_3x3')
 							tower_pool_1 = slim.conv2d(tower_pool, 64, 1, scope='Conv2d_0b_1x1')
 						net = tf.concat([tower_conv, tower_conv1_1, tower_conv2_2, tower_pool_1], 3)
