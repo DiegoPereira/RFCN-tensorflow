@@ -42,7 +42,7 @@ class BoxInceptionResnet(BoxNetwork):
 
 		print("Training network from "+(trainFrom if trainFrom is not None else "end"))
 
-		with tf.compat.v1.variable_scope(name, reuse=reuse) as scope:
+		with tf.compat.v1.variable_scope(name, reuse=tf.AUTO_REUSE) as scope:
 			self.googleNet = InceptionResnetV2("features", inputs, trainFrom=trainFrom, freezeBatchNorm=freezeBatchNorm)
 			self.scope=scope
 		
